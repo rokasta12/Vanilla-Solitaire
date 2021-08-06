@@ -9,6 +9,7 @@ function paintCards(cards) {
 
   cards.forEach((row, index) => {
     const cardObj = { 11: 'J', 12: 'Q', 13: 'K' };
+
     const generatedRow = document.createElement('div');
     const classOfRow = `row-bottom-${String(index + 1)}`;
     generatedRow.classList.add('row-bottom', classOfRow);
@@ -18,9 +19,10 @@ function paintCards(cards) {
     row.forEach((rowsCard, index) => {
       console.log(rowsLength);
 
-      const cardsName = rowsCard[1] > 10 ? cardObj[rowsCard[1]] : rowsCard[1];
+      const cardsNumber = rowsCard.slice(1, rowsCard.length);
+      const cardsName = cardsNumber > 10 ? cardObj[cardsNumber] : cardsNumber;
       const card = `
-        <div data-card='${rowsCard}' class="card ${
+        <div data-card='${rowsCard}' data-cardnumber='${cardsNumber}' class="card ${
         index === rowsLength - 1 ? '' : 'hidden'
       }" style="z-index:${index + 1} " >
               <div class="start"><h2> ${cardsName} </h2></div>
@@ -80,24 +82,41 @@ class Game {
 }
 function allowDrop(ev) {
   ev.preventDefault();
+
+  const containerCardsNumber = ev.target.dataset.cardnumber;
+  var data = ev.dataTransfer.getData('cardsnumber');
+  console.log('cards number', data);
+  /*   if (containerCardsNumber - data !== 1) {
+    alert('You cant');
+  } */
 }
 
 function dragstart_handler(event) {
   // Add the target element's id to the data transfer object
-  event.dataTransfer.setData('text', event.target.dataset.card);
+  event.dataTransfer.setData('cardsdata', event.target.dataset.card);
+  event.dataTransfer.setData('cardsnumber', event.target.dataset.cardnumber);
 }
 function drop(ev) {
   ev.preventDefault();
-  var data = ev.dataTransfer.getData('text');
-  console.dir(data);
-  ev.target.parentElement.appendChild(
-    document.querySelector(`[data-card='${data}']`)
-  );
+  const containerCardsNumber = ev.target.dataset.cardnumber;
+
+  var data = ev.dataTransfer.getData('cardsnumber');
+  var cardsDataAsId = ev.dataTransfer.getData('cardsdata');
+
+  if (containerCardsNumber - data !== 1) {
+    alert('You cant');
+  } else {
+    ev.target.parentElement.appendChild(
+      document.querySelector(`[data-card='${cardsDataAsId}']`)
+    );
+  }
 }
 window.addEventListener('DOMContentLoaded', () => {
   const a = new Game();
   // Get the element by id
-  const elements = document.querySelectorAll('#card-container-bottom .card');
+  const elements = document.querySelectorAll(
+    '#card-container-bottom .card:not(.hidden)'
+  );
   // Add the ondragstart event listener
   elements.forEach((element) => {
     element.setAttribute('draggable', true);
