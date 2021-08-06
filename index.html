@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+  </style>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    :root {
+      --bottom-card-row-count-top: 7;
+      --bottom-card-row-count-top-bottom: 7;
+      --white: #ffffff;
+    }
+    body {
+      background-color: green;
+      font-family: 'Changa One', cursive;
+      max-width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    .container {
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+    .card.hidden {
+      background-color: #fdb9b8;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cpath fill='%23bc0b06' fill-opacity='0.97' d='M0 17.83V0h17.83a3 3 0 0 1-5.66 2H5.9A5 5 0 0 1 2 5.9v6.27a3 3 0 0 1-2 5.66zm0 18.34a3 3 0 0 1 2 5.66v6.27A5 5 0 0 1 5.9 52h6.27a3 3 0 0 1 5.66 0H0V36.17zM36.17 52a3 3 0 0 1 5.66 0h6.27a5 5 0 0 1 3.9-3.9v-6.27a3 3 0 0 1 0-5.66V52H36.17zM0 31.93v-9.78a5 5 0 0 1 3.8.72l4.43-4.43a3 3 0 1 1 1.42 1.41L5.2 24.28a5 5 0 0 1 0 5.52l4.44 4.43a3 3 0 1 1-1.42 1.42L3.8 31.2a5 5 0 0 1-3.8.72zm52-14.1a3 3 0 0 1 0-5.66V5.9A5 5 0 0 1 48.1 2h-6.27a3 3 0 0 1-5.66-2H52v17.83zm0 14.1a4.97 4.97 0 0 1-1.72-.72l-4.43 4.44a3 3 0 1 1-1.41-1.42l4.43-4.43a5 5 0 0 1 0-5.52l-4.43-4.43a3 3 0 1 1 1.41-1.41l4.43 4.43c.53-.35 1.12-.6 1.72-.72v9.78zM22.15 0h9.78a5 5 0 0 1-.72 3.8l4.44 4.43a3 3 0 1 1-1.42 1.42L29.8 5.2a5 5 0 0 1-5.52 0l-4.43 4.44a3 3 0 1 1-1.41-1.42l4.43-4.43a5 5 0 0 1-.72-3.8zm0 52c.13-.6.37-1.19.72-1.72l-4.43-4.43a3 3 0 1 1 1.41-1.41l4.43 4.43a5 5 0 0 1 5.52 0l4.43-4.43a3 3 0 1 1 1.42 1.41l-4.44 4.43c.36.53.6 1.12.72 1.72h-9.78zm9.75-24a5 5 0 0 1-3.9 3.9v6.27a3 3 0 1 1-2 0V31.9a5 5 0 0 1-3.9-3.9h-6.27a3 3 0 1 1 0-2h6.27a5 5 0 0 1 3.9-3.9v-6.27a3 3 0 1 1 2 0v6.27a5 5 0 0 1 3.9 3.9h6.27a3 3 0 1 1 0 2H31.9z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .card-container-bottom {
+      display: grid;
+      grid-template-columns: repeat(
+        var(--bottom-card-row-count-top-bottom),
+        150px
+      );
+      gap: auto;
+      margin-top: 250px;
+      justify-content: space-around;
+    }
+    .card-container-bottom .row-bottom {
+    }
+    .card-container-bottom .card {
+      margin-top: -225px;
+    }
+    .card {
+      height: 240px;
+      width: 150px;
+      background-color: azure;
+      border: 2px solid rgb(20, 63, 0);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      position: relative;
+    }
+    .card.hidden {
+    }
+    .card .start {
+      display: flex;
+      width: 50%;
+    }
+    .card .end {
+      display: flex;
+      align-self: end;
+      justify-content: end;
+      width: 50%;
+    }
+    .card.shuffled {
+      background-color: rgb(232, 255, 23);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card-top-container {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(var(--bottom-card-row-count-top), 150px);
+      margin-bottom: 120px;
+      justify-content: space-around;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="card-top-container">
+        <div class="row row-1">
+          <div class="card shuffled">
+            <img
+              width="50px"
+              src="https://img.icons8.com/ios-filled/100/000000/javascript.png"
+            />
+          </div>
+        </div>
+        <div class="row row-1">
+          <div class="card"></div>
+        </div>
+        <div class="row row-1"></div>
+
+        <div class="row row-1">
+          <div class="card"></div>
+        </div>
+        <div class="row row-1">
+          <div class="card"></div>
+        </div>
+        <div class="row row-1">
+          <div class="card"></div>
+        </div>
+        <div class="row row-1">
+          <div class="card"></div>
+        </div>
+      </div>
+
+      <div id="card-container-bottom" class="card-container-bottom"></div>
+    </div>
+  </body>
+  <script src="main.js"></script>
+</html>
