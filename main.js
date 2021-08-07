@@ -25,8 +25,11 @@ function paintCards(cards) {
         <div data-card='${rowsCard}' data-cardnumber='${cardsNumber}' class="card ${
         index === rowsLength - 1 ? '' : 'hidden'
       }" style="z-index:${index + 1} " >
-              <div class="start"><h2> ${cardsName} </h2></div>
+      <span class="wrapper-span"></span>
+              <div class="start"><h2> ${cardsName}  </h2></div>
               <div class="end"><h2>${cardsName}</h2></div>
+
+
         </div>`;
       generatedRow.insertAdjacentHTML('beforeend', card);
     });
@@ -50,8 +53,9 @@ class Game {
     this.pileCount = 7;
     this.cards = this.shuffleCards();
     this.moves = [];
-    this.board = this.distributeCards(this.cards);
-    console.log(this.board);
+    const x = this.distributeCards();
+    this.board = x[0];
+    this.leftCards = x[1];
   }
 
   shuffleCards() {
@@ -77,7 +81,8 @@ class Game {
       board.push(rowsCards);
     }
     paintCards(board);
-    return board;
+
+    return [board, cardsCopy];
   }
 }
 function allowDrop(ev) {
@@ -87,7 +92,7 @@ function allowDrop(ev) {
   var data = ev.dataTransfer.getData('cardsnumber');
   console.log('cards number', data);
   /*   if (containerCardsNumber - data !== 1) {
-    alert('You cant');
+    document.body.style.cursor = 'grab';
   } */
 }
 
@@ -99,16 +104,36 @@ function dragstart_handler(event) {
 function drop(ev) {
   ev.preventDefault();
   const containerCardsNumber = ev.target.dataset.cardnumber;
-
+  console.log(containerCardsNumber);
   var data = ev.dataTransfer.getData('cardsnumber');
   var cardsDataAsId = ev.dataTransfer.getData('cardsdata');
 
   if (containerCardsNumber - data !== 1) {
     alert('You cant');
   } else {
-    ev.target.parentElement.appendChild(
-      document.querySelector(`[data-card='${cardsDataAsId}']`)
+    const draggedElement = document.querySelector(
+      `[data-card='${cardsDataAsId}']`
     );
+    const childrenOfDraggedRow = draggedElement.parentElement.children;
+    console.log(
+      childrenOfDraggedRow[childrenOfDraggedRow.length - 2].classList.remove(
+        'hidden'
+      )
+    );
+    ev.target.parentElement.appendChild(draggedElement);
+    const rowsAllCards = draggedElement.parentElement.querySelectorAll('.card');
+    const z = rowsAllCards[rowsAllCards.length - 2].style.zIndex;
+    draggedElement.style.zIndex = z;
+    const elements = document.querySelectorAll(
+      '#card-container-bottom .card:not(.hidden)'
+    );
+    // Add the ondragstart event listener
+    elements.forEach((element) => {
+      element.setAttribute('draggable', true);
+      element.addEventListener('dragstart', dragstart_handler);
+      element.addEventListener('drop', drop);
+      element.addEventListener('dragover', allowDrop);
+    });
   }
 }
 window.addEventListener('DOMContentLoaded', () => {
