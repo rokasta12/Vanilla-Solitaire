@@ -45,6 +45,45 @@ function shuffleArray(array) {
   }
   return array;
 }
+function giveMeCard(event) {
+  const shuffledCardContainer = document.querySelector('.row-2 > div');
+  const shuffledDiv = event.currentTarget;
+  const shuffledCardArray =
+    shuffledDiv.parentElement.nextElementSibling.children[0].children;
+  const cLength = shuffledCardArray.length;
+
+  if (shuffledCardContainer.classList.contains('non-visible')) {
+    shuffledCardContainer.classList.remove('non-visible');
+    shuffledCardArray[cLength - 1].classList.remove('hidden');
+  } else {
+    shuffledCardArray[cLength - 1].classList.remove('hidden');
+    const lastElement = shuffledCardArray[cLength - 1];
+    lastElement.remove();
+    shuffledCardArray[cLength - 2].classList.remove('hidden');
+  }
+}
+
+function paintLeftCards(leftCards) {
+  const div = document.createElement('div');
+  div.classList.add('non-visible');
+  leftCards.forEach((leftCard, index) => {
+    const cardObj = { 11: 'J', 12: 'Q', 13: 'K' };
+
+    const cardsNumber = leftCard.slice(1, leftCard.length);
+    const cardsName = cardsNumber > 10 ? cardObj[cardsNumber] : cardsNumber;
+    const card = `
+      <div data-card='${leftCard}' data-cardnumber='${cardsNumber}' class="card hidden" style="z-index:${
+      index + 1
+    } " >
+    <span class="wrapper-span"></span>
+            <div class="start"><h2> ${cardsName}  </h2></div>
+            <div class="end"><h2>${cardsName}</h2></div>
+
+      </div>`;
+    div.insertAdjacentHTML('beforeend', card);
+  });
+  document.querySelector('.row-2').insertAdjacentElement('beforeend', div);
+}
 
 class Game {
   constructor(gameType) {
@@ -56,6 +95,7 @@ class Game {
     const x = this.distributeCards();
     this.board = x[0];
     this.leftCards = x[1];
+    paintLeftCards(this.leftCards);
   }
 
   shuffleCards() {
@@ -115,15 +155,16 @@ function drop(ev) {
       `[data-card='${cardsDataAsId}']`
     );
     const childrenOfDraggedRow = draggedElement.parentElement.children;
-    console.log(
+    if (childrenOfDraggedRow && childrenOfDraggedRow.length >= 2) {
       childrenOfDraggedRow[childrenOfDraggedRow.length - 2].classList.remove(
         'hidden'
-      )
-    );
+      );
+    }
     ev.target.parentElement.appendChild(draggedElement);
     const rowsAllCards = draggedElement.parentElement.querySelectorAll('.card');
     const z = rowsAllCards[rowsAllCards.length - 2].style.zIndex;
     draggedElement.style.zIndex = z;
+
     const elements = document.querySelectorAll(
       '#card-container-bottom .card:not(.hidden)'
     );
@@ -150,3 +191,8 @@ window.addEventListener('DOMContentLoaded', () => {
     element.addEventListener('dragover', allowDrop);
   });
 });
+const shuffledDiv = document.querySelector('.shuffled');
+/* const shuffledCardArray = shuffledDiv.parentElement.nextElementSibling.children;
+shuffledCardArray[shuffledCardArray.length - 1].classList.remove('hidden'); */
+
+shuffledDiv.addEventListener('click', giveMeCard);
