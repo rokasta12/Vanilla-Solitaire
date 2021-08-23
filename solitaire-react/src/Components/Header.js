@@ -20,7 +20,7 @@ const HeaderTitle = styled.h2`
 
 const StyledHeader = () => {
   const [time, setTime] = useState(0);
-
+  setTime('0:00');
   // setInterval(timePlus(), 1000);
 
   return (
