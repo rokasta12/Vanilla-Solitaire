@@ -28,8 +28,6 @@ function paintCards(cards) {
       <span class="wrapper-span"></span>
               <div class="start"><h2> ${cardsName}  </h2></div>
               <div class="end"><h2>${cardsName}</h2></div>
-
-
         </div>`;
       generatedRow.insertAdjacentHTML('beforeend', card);
     });
@@ -45,6 +43,7 @@ function shuffleArray(array) {
   }
   return array;
 }
+
 function giveMeCard(event) {
   const shuffledCardContainer = document.querySelector('.row-2 > div');
   const shuffledDiv = event.currentTarget;
@@ -192,6 +191,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 const shuffledDiv = document.querySelector('.shuffled');
+
 /* const shuffledCardArray = shuffledDiv.parentElement.nextElementSibling.children;
 shuffledCardArray[shuffledCardArray.length - 1].classList.remove('hidden'); */
 
