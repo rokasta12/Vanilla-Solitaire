@@ -39,7 +39,12 @@ const CardWrapper = () => {
     const draggedCaardsrowsIndex = event.dataTransfer.getData('rowsIndex');
     const cardIdToDrop = event.dataTransfer.getData('cardsid');
     const cardToDrop = event.dataTransfer.getData('cardsnumber');
-    console.log('card to drop: ', cardToDrop);
+    console.log(
+      'card to drop: ',
+      cardToDrop,
+      draggedCaardsrowsIndex,
+      cardIdToDrop
+    );
   }
 
   function onDragOver(event, lastElement) {

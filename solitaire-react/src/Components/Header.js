@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../Components/styled/colors';
 
@@ -20,10 +20,6 @@ const HeaderTitle = styled.h2`
 
 const StyledHeader = () => {
   const [time, setTime] = useState(0);
-
-  const timePlus = () => {
-    setTime(time + 1);
-  };
 
   // setInterval(timePlus(), 1000);
 
